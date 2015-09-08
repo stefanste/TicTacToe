@@ -1,5 +1,7 @@
 class Position
 
+  attr_accessor :value
+
   def initialize
     @value = ''
   end
