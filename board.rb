@@ -1,5 +1,7 @@
 require_relative 'row'
 require_relative 'column'
+require_relative 'position'
+require_relative 'board_presenter'
 
 class Board
 
@@ -24,8 +26,20 @@ class Board
     @positions[position_index].value = team
   end
 
-  def any_rows_complete?
-    @rows.any?(:complete?)
+  def somebody_has_won?
+    (@rows + @columns + @diagonals).any?(&:complete?)
+  end
+
+  def full?
+    @positions.none? { |position| position.value == ' ' }
+  end
+
+  def winner
+    (@rows + @columns + @diagonals).detect(&:complete?).winning_team
+  end
+
+  def to_s
+    BoardPresenter.new(self).to_s
   end
 
   private
@@ -54,8 +68,8 @@ class Board
   end
 
   def initialize_positions
-    (1..3).each do
-
+    9.times do
+      @positions << Position.new
     end
   end
 

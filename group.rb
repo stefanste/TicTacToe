@@ -10,4 +10,8 @@ class Group
     positions.all? { |position| position.value == 'X' } ||
     positions.all? { |position| position.value == 'O' }
   end
+
+  def winning_team
+    positions.first.value
+  end
 end
